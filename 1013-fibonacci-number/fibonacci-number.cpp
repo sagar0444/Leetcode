@@ -12,7 +12,7 @@ if( n == 0 || n == 1)
 
   }
 
-  int solveByMemo(int n , vector<int> &dp){
+  int solveByMemo(int n , vector<int>& dp){
     
 if( n == 0 || n == 1)
         return n ;
