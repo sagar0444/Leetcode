@@ -1,42 +1,22 @@
 class Solution {
 public:
-    int solveByrecursion( int index , vector<int>& nums){
-
-        if( index >= nums.size()){
-
-            return 0;
+int f( vector<int>& nums , int index , vector<int>& dp){
+    // base case
+    if( index >= nums.size()){
+        return 0;
     }
-
-    int include = nums[index] + solveByrecursion(index + 2 , nums);
-    int exclude = 0 + solveByrecursion(index + 1, nums);
-
-    int ans = max( include , exclude);
-    return ans;
+    if(dp[index] != -1){
+        return dp[index];
     }
-int solveMemo( int index ,vector<int>& nums ,  vector<int>& dp){
- if( index >= nums.size()){
-
-            return 0;
-    }
-
-    if( dp[index] != -1){
-         return dp[index];
-    }
-
-    int include = nums[index] + solveMemo(index + 2 , nums , dp);
-    int exclude = 0 + solveMemo(index + 1, nums , dp);
-
-    dp[index] = max( include , exclude);
-    return dp[index];
-
-
+    int pick = nums[index] + f(nums, index+2 ,dp);
+    int notPick = 0 + f(nums,index+1 ,dp);
+    return dp[index] = max(pick , notPick);
+     return dp[index];
 }
-
     int rob(vector<int>& nums) {
         int index = 0;
-    int n = nums.size();
-        vector<int> dp(n+ 1 , -1);
-        int ans = solveMemo( index , nums , dp);
-        return ans ;
+         int n = nums.size();
+         vector<int>dp(n+1 , -1);
+         return f(nums, index,dp);
     }
 };
