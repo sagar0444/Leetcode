@@ -1,42 +1,51 @@
-
 class Solution {
 public:
+
+    bool allZeros(vector<int>& counter) {
+        for (int i : counter) {
+            if (i != 0)
+                return false;
+        }
+        return true;
+    }
+
     vector<int> findAnagrams(string s, string p) {
+
+        int n = s.length();
+        int k = p.length();
 
         vector<int> ans;
 
-        int n = s.size();
-        int m = p.size();
+        if (k > n) return ans;
 
-        if (m > n) return ans;
+        vector<int> counter(26, 0);
 
-        vector<int> freqP(26, 0);
-        vector<int> freqS(26, 0);
-
-        // Store frequency of characters in p
-        for (int i = 0; i < m; i++) {
-            freqP[p[i] - 'a']++;
+        // Store frequency of p
+        for (int i = 0; i < k; i++) {
+            counter[p[i] - 'a']++;
         }
 
-        int i = 0;
+        int i = 0, j = 0;
 
-        for (int j = 0; j < n; j++) {
+        while (j < n) {
 
-            // Add current character
-            freqS[s[j] - 'a']++;
+            // Add character to window
+            counter[s[j] - 'a']--;
 
-            // Maintain window size m
-            if (j - i + 1 > m) {
+            // Window size becomes k
+            if (j - i + 1 == k) {
 
-                // Remove character from left
-                freqS[s[i] - 'a']--;
+                // Check anagram
+                if (allZeros(counter)) {
+                    ans.push_back(i);
+                }
+
+                // Remove leftmost character
+                counter[s[i] - 'a']++;
                 i++;
             }
 
-            // Check if both frequencies match
-            if (j - i + 1 == m && freqS == freqP) {
-                ans.push_back(i);
-            }
+            j++;
         }
 
         return ans;
