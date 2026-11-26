@@ -30,7 +30,7 @@ public:
 
         int n = triangle.size();
 
-        vector<vector<int>> dp(n, vector<int>(n, 0));
+        vector<vector<int>> dp(n, vector<int>(n, -1));
 vector<vector<bool>> vis( n , vector<bool>( n , false));
         return f(0, 0, triangle, dp , vis);
     }
